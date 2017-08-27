@@ -56,9 +56,19 @@ def ipn():
 			download_url = 'https://fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
 			
 			# save the key to the database
-			db_key = purchase_key(key)
-			db.session.add(db_key)
-			db.session.commit()
+			try:
+				db_key = purchase_key(key)
+				db.session.add(db_key)
+				db.session.commit()
+			except Exception as e:
+				send_email(
+				fromaddr = 'fidelitydevv@gmail.com',
+				fromaddr_password = 'afgu6799',
+				toaddr = 'a.d.beskine@outlook.com',
+				subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
+				text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:\n{data}\n\n\n{e}'.format(data = str(values), e=e)
+				)
+
 			
 			# send the email
 			send_email(
