@@ -114,7 +114,7 @@ def download(book, customer_key):
 	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
 	if key:
 		delkey.start()
-		dowbok.start()
+		return dowbok.start()
 			
 	else:
 		return 'The purchase key is either invalid or already used.'
