@@ -104,9 +104,7 @@ def success():
 @purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
 def download(book, customer_key):
 	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
-
-	if not key:
-		session['key_check'] = False
+	session['key_check'] = False
 	if key:
 		session['key_check'] = True
 
