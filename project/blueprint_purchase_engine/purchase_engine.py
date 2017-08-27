@@ -106,7 +106,7 @@ def free_book():
 			email = request.form['email']
 			book = request.form['book']
 			key = key_generator()
-			download_url = 'https://nameless-sea-57538.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
+			download_url = 'fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
 			db_key = purchase_key(key)
 			db.session.add(db_key)
 			db.session.commit()
@@ -119,6 +119,12 @@ def free_book():
 				)
 	return render_template('free_book.html')
 
+
+################################
+####DRY AND CODE SMELL ALERT####
+################################
+
+# refract free_book and ipn so as to not repeat download url = etc etc
 
 
 # refract this code to make a 'download book' helper function which takes the parameters: book, email and does everything else to send the download email
