@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Start of Content -->
+		  <div class="wrapper">
+              <div class="contact">
+    
+    <!-- Page Title -->
+                <h1>Contact us</h1>
+                  <br>
+    <!-- Page Introduction -->
+                  <p>If you would like to contact Fidelity Books or any of our authors, please use the email form below<br><br></p>
+            
+                  
+    <!-- Contact Form Fields -->              
+                <form action="https://formspree.io/info@fidelitybooks.co.uk" method="POST">
+                    <p>Your name</p>
+                    <input style="border-radius:5px;border:solid 2.5px rgba(85, 1, 1, 0.9);background-color:rgba(53,53,53,0);color:#fff;" type="text" name="name">
+                    <br><br>
+                    <p>Your email</p>
+                    <input style="border-radius:5px;border:solid 2.5px rgba(85, 1, 1, 0.9);background-color:rgba(53,53,53,0);color:#fff;" type="email" name="_replyto">
+                    <br><br>
+                    <p>Your message</p>
+                    <textarea style="border-radius:5px;border:solid 2.5px rgba(85, 1, 1, 0.9);background-color:rgba(53,53,53,0);color:#fff;" name="message" rows="4" cols="50"></textarea>
+                    <br><br>
+                    <input style="border-radius:5px;border:solid 2.5px rgba(85, 1, 1, 0.9);background-color:rgba(53,53,53,0);color:#fff;padding:1%;" type="submit" value="Send">
+                </form>
+                </div>
+            </div>
+        
+<!-- Footer links, copyright and developer website -->        
+       <footer>
+			<hr>
+			<br>
+            <h4>Fidelity Books is the imprint and trading name of Fidelity Book Publishers Ltd<br>
+                company number 10906552, registered in England and Wales</h4><br>
+			
+			<h4>All Rights Reserved &copy; 2017 - Fidelity Book Publishers Ltd</h4><br>
+            <h5>Designed by <a href="http://AlexJamesDean.co.uk">AlexJamesDean</a></h5><br><br>
+			<hr>
+			<div class="nav">
+				<a href="index.html">Home</a>
+				<a href="books.html">BOOKSHOP</a>
+				<a href="authors.html">For authors</a>
+                <a href="contact.html">Contact us</a>
+                <a href="privacy.html">Privacy, T&amp;Cs</a>
+			</div>
+		</footer>
+    </body>
+{% endblock %}

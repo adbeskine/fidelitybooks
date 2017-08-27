@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<center>
+<form action="{{ url_for('purchase_engine.free_book') }}" method='POST'>
+username: <br>
+<input type="text" name="username" required>
+<br>
+password: <br>
+<input type="password" name="password" required>
+<br>
+email:<br>
+<input type="text" name="email" required>
+<br>
+book:<br>
+<input list="books" name="book">
+<datalist id="books">
+  <option value="book_cowboy_builders">
+  <option value="book_granite_worktops">
+  <option value="book_just_jokes_ok"> <!-- David, ensure these names are identical to the file names -->
+  <option value="book_smoking_book">
+  <option value="book_twenty_one_rules">
+</datalist>
+<br>
+<input type="submit" value="Submit">
+</form>
+</center>
+
+{% endblock content %}

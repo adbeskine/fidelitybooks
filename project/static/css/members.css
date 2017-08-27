@@ -1,0 +1,148 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+	background-image: url(../img/bg.jpg);
+}
+
+nav {
+	background-color: rgba(53, 53, 53, 0.8);
+	padding-top: 1.5%;
+	padding-bottom: 1.5%;
+	text-align: center;
+	position: fixed;
+	width: 100%;
+	border-bottom: 5px solid #fff200;
+}
+
+nav a {
+	margin: 1.5%;
+	padding: 0.5%;
+	text-align: center;
+	font-size: 22px;
+	text-decoration: none;
+	color: #fff200;
+	height: 100%;
+	border: 0px solid #fff;
+	transition: all .3s ease-in-out;
+}
+
+nav a:hover {
+	border: 3px solid #fff;
+	color: #fff;
+	border-radius: 10px;
+	padding: 0.5%;
+	transition: all .3s ease-in-out;
+}
+
+#headerinfo img {
+	display: inline-block;
+	/*margin: 1%;*/
+	/*padding: 1%;*/
+	border-radius: 100%;
+	border: 5px solid #fff200;
+}
+
+#headerinfo {
+	padding-top: 7.5%;
+	text-align: center;
+	margin-right: 15%;
+	padding-bottom: 2.5%;
+	width: 100%;
+	background-color: rgba(53, 53, 53, 0);
+	color: #fff;
+}
+
+#headerinfo h1 {
+	padding-top: 2.5%%;
+}
+
+.wrapper {
+	vertical-align: top;
+	background-color: rgba(53, 53, 53, 0.5);
+	width: 100%;
+	color: #fff200;
+	border-top: 5px solid #fff200;
+}
+
+.member {
+	display: inline-block;
+	width: 40%;
+	padding: 1%;
+	vertical-align: top;
+	background-color: rgba(53, 53, 53, 0.5);
+	border: solid 5px #fff200;
+	height: 150px;
+	border-radius: 10px 10px 0 0;
+	margin: 2.5%;
+	position: relative;
+}
+
+.member p {
+	color: #fff;
+}
+
+.member a {
+	font-size: 22px;
+	color: #fff;
+	border: 3px solid #fff200;
+	border-radius: 5px;
+	padding: 1%;
+	position: absolute;
+	top: 65%;
+	text-decoration: none;
+}
+
+.vidsec {
+    background-color: rgba(53, 53, 53, 0.5);
+    text-align: center;
+}
+
+.vidsec h1 {
+    padding 1%;
+    color: #fff;
+    width: 15%;
+    margin-left: 42.5%;
+}
+
+.video {
+	display: inline-block;
+	width: 20%;
+    padding-bottom: 1.5%;
+	vertical-align: top;
+	background-color: rgba(53, 53, 53, 0.5);
+	border: solid 5px #fff200;
+	height: 150px;
+	border-radius: 5px 5px 5px 5px;
+	margin: 1%;
+	position: relative;
+    text-align: center;
+}
+
+.video a {
+	color: #fff;
+	border-radius: 5px;
+	text-decoration: none;
+    float: left;
+    display: inline-block;
+    margin: 1%;
+    text-align: center;
+}
+
+.contact {
+    text-align: center;
+    padding-top: 1%;
+}
+
+.contact p {
+    color: #fff;
+}
+
+form {
+    text-align: center;
+}
+
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fidelity Books for Knowledge, Experience, Expertise</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="Mrntw6FkhQBXb-3j-lGoYTDFE3ehsReeUSxtGpNYKPI" />
+    <meta name="description" content="Fidelity Books specialises in knowledge, experience and expertise regarding individuals, families, work and the wider community.  We are interested in what people have learned, achieved or undertaken. All our books are based upon reality.">
+</head>
+	<body>
+		<header>
+            
+<!-- Navigation Menu -->
+		<div id="navbar">
+				<nav>
+					<a href="{{ url_for('base.index') }}">Home</a>
+                    <a href="{{ url_for('base.bookshop') }}">BOOKSHOP</a>
+					<a href="{{ url_for('base.authors') }}">For authors</a>
+					<a href="{{ url_for('base.contact') }}">Contact us</a>
+				</nav>
+			</div>
+
+<!-- Website Logo -->
+			<div id="headerinfo">
+				<img class="logo" src="{{ url_for('static', filename='jpg/fbl.png') }}" alt="Fidelity Logo" height="150px" width="300px">
+			</div>
+		</header>
+{% block content %}
+
+{% endblock %}
+{% block footer %}
+<br><br><br><br><br><br><br><br><br>
+        <!-- Social Media Area -->
+		<div class="socialb">
+            <!-- Social Media Title --> 
+			<h2>Social Media</h2><br>
+            <!-- Social Media Description --> 
+			<p>Check us out and give a like on social media!</p><br>
+            
+            <!-- Social Media Facebook Link --> 
+            <div class="social">
+				<img src="{{ url_for('static', filename='jpg/fb.png') }}" alt="Fidelity Books Facebook Page" width="100px"> 
+			</div>
+        </div>
+        
+        <!-- Footer links, copyright and developer website -->
+		<footer>
+			<hr>
+			<br>
+            <h4>Fidelity Books is the imprint and trading name of Fidelity Book Publishers Ltd<br>
+                company number 10906552, registered in England and Wales</h4><br>
+			
+			<h4>All Rights Reserved &copy; 2017 - Fidelity Book Publishers Ltd</h4><br>
+            <br><br>
+			<hr>
+			<div class="nav">
+				<a href="index.html">Home</a>
+				<a href="books.html">BOOKSHOP</a>
+				<a href="authors.html">For authors</a>
+                <a href="contact.html">Contact us</a>
+                <a href="privacy.html">Privacy, T&amp;Cs</a>
+			</div>
+		</footer>
+
+	</body>
+
+</html>
+{% endblock %}

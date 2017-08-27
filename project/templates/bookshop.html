@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- TODO redo this whole thing to loop through with jinja 2 templates and use database for books -->
+<!-- Start of Content -->
+        <div class="wrapper">
+		<div class="home" style="text-align:center;">
+            
+<!-- Start of Books Section -->
+    <!-- Our Books Page Heading -->
+            <h2>Books from Fidelity</h2>
+            <h3>Click on a book below for more information and how to purchase</h3>
+            
+    <!-- Book Area 1 -->
+                <a href="{{ url_for('books.book_smoking_book') }}">
+                <div class="bookpl">
+                <img src="static/jpg/smokingimagefront6.8.17.png" width="316px" height="472px">
+                <h3>From Infancy to Adulthood:<br>
+                    Smoke &amp; Drug-free Children<br></h3>
+                <p>Do you want your children never to smoke and never to take drugs?<br> </p>
+                </div>
+                </a>
+    <!-- End Book Area 1 -->
+            
+    <!-- Book Area 2 -->
+                <a href="{{ url_for('books.book_cowboy_builders') }}">
+                <div class="bookpl">
+                <img src="static/jpg/cowboysfrontcover23.7.17.png" width="316px" height="472px">
+                <h3>IDENTIFYING HONEST &amp; RELIABLE BUILDERS<br></h3>
+                <p>Trade secrets helping homeowners find the good guys and avoid the cowboys</p>
+                </div>
+                </a>
+    <!-- End Book Area 2 -->
+            
+    <!-- Book Area 3 -->
+                <a href="{{ url_for('books.book_just_jokes_ok') }}">
+                <div class="bookpl">
+                <img src="static/jpg/jokesfrontcover30.7.17.png" width="276.5px" height="413px">
+                <h3>JUST JOKES, OK?
+                <br></h3>
+                <p>A collection of jokes, tested on the collector&rsquo;s family, to thaw all but the most grumpy of hard&#8208;hearts
+                </p>
+                </div>
+                </a>
+    <!-- End Book Area 3 -->
+            
+       <!-- Book Area 4 -->
+                <a href="{{ url_for('books.book_twenty_one_rules') }}">
+                <div class="bookpl">
+                <img src="static/jpg/twentyonerulesfrontcover5.8.17.png" width="276.5px" height="413px">
+                <h3>Twenty&#8209;one SECRET RULES for SURVIVAL in your office, business and workplace
+                <br></h3>
+                <p>Twenty&#8209;one rules to help you survive and prosper at work...and avoid costly mistakes
+                </p>
+                </div>
+                </a>
+    <!-- End Book Area 4 -->      
+            
+             <!-- Book Area 5 -->
+                <a href="{{ url_for('books.book_granite_worktops') }}">
+                <div class="bookpl">
+                <img src="static/jpg/granitefrontcover5.8.17.png" width="276.5px" height="413px">
+                <h3>Homeowners' Guide to<br>
+                    GRANITE KITCHEN WORKTOPS
+                <br></h3>
+                <p>Trade knowledge for homeowners wanting a granite worktop
+                </p>
+                </div>
+                </a>
+    <!-- End Book Area 5 -->     
+            
+            
+            
+            
+            
+            
+            
+            
+    <!-- Example Book Area 
+            <a href="book5.html"><div class="bookpl">
+                <img src="img/">
+                <h4>Book Title</h4>
+                <p>Short Description</p>
+                </div>
+                </a>
+         End Example Area -->
+            
+        </div>
+        </div>
+<!-- Footer links, copyright and developer website -->
+{% endblock %}

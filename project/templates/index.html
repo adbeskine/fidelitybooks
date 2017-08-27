@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Start of Content -->
+		<div class="wrapper">
+		<div class="home" style="text-align:center;">
+            
+    <!-- Page Title -->  
+			<h2>Welcome to Fidelity Books</h2></div></div>
+        
+        <div class="wrapper">
+		<div class="home" style="text-align:left;">
+            
+    <!-- Website Introduction -->
+			<p>
+               Fidelity Books specialises in knowledge, experience and expertise.  Fidelity publishes valuable, interesting or worthwhile knowledge and expertise gained by people from their own experience.  Our particular focus is on the lives of individual people, families, work and the wider community.<br><br>
+                
+We are primarily interested in real people and their day-to-day lives.  We are interested in what people have learned, undertaken or experienced as part of their life.  We are interested in the wisdom people have gained or the knowledge they have developed.<br><br>
+                
+We are interested, in the broadest sense, in the knowledge and expertise that people have accumulated in the course of their life, the dissemination of which might be to the benefit of others.<br><br> 
+                
+Our initial publications include books on the following five topics:<br><br>
+&ensp;&ensp;&ensp; &#8226;&ensp;<a href="{{ url_for('books.book_smoking_book') }}">How to bring up children so they never smoke or take drugs</a><br>
+                &ensp;&ensp;&ensp; &#8226;&ensp;<a href="{{ url_for('books.book_twenty_one_rules') }}">The secret rules for surviving life in the office and at work</a><br>
+                &ensp;&ensp;&ensp; &#8226;&ensp;<a href="{{ url_for('books.book_cowboy_builders') }}">How to find good builders</a><br>
+              &ensp;&ensp;&ensp; &#8226;&ensp;<a href="{{ url_for('books.book_smoking_book') }}">A jokes book</a><br>
+               &ensp;&ensp;&ensp; &#8226;&ensp;<a href="{{ url_for('books.book_granite_worktops') }}">A guide to granite kitchen worktops</a><br><br>
+                 
+                These books are based upon experience built up over a lifetime.  All are relevant to other individuals, families, work or the wider community.<br><br>
+                
+                Our publications can be seen on our <a href="http://www.fidelitybooks.co.uk/books.html">BOOKSHOP Page</a>&ensp; By clicking on an individual book, you will see further information on its content and how to buy it. <br><br>
+                
+Fidelity Books is pleased to hear from authors who want to submit manuscripts for publication based upon their knowledge, experience or expertise.  We particularly encourage unpublished authors who feel that they have a valuable, interesting or unique story to tell.<br><br>   
+          
+New authors can submit their proposals via our <a href="http://www.fidelitybooks.co.uk/authors.html">Authors' Page</a><br><br>  
+            </p>
+		</div>
+		</div>
+        
+    <!-- Books Area -->
+		<div id="books">
+    <!-- Books Area Title -->
+			<h2>Books from Fidelity</h2><br>
+    <!-- Books Area Description -->
+            <p id="bp">Click on <a href="http://www.fidelitybooks.co.uk/books.html">BOOKSHOP</a> or a title below for more information on each book and how to buy it</p><br>
+    <!-- Best Sellers Area -->
+       
+            <!-- Book Area -->
+			<div class="bookbox">
+				<div class="gameinfo1">
+        <!-- Book Name -->
+                    <h3><a href="http://www.fidelitybooks.co.uk/book1.html">From Infancy to Adulthood: Smoke &amp; Drug-free Children</a></h3><br>
+        <!-- Book Description -->
+				<p>You want your children never to smoke or take drugs?</p>	
+				</div>
+			</div>
+        <!-- End Book Area -->
+        
+            <!-- Book Area -->
+			<div class="bookbox">
+				<div class="gameinfo1">
+        <!-- Book Name -->
+                    <h3><a href="http://www.fidelitybooks.co.uk/book2.html">Identifying Honest and Reliable Builders</a></h3><br>
+        <!-- Book Description -->
+				<p>Trade secrets helping homeowners find the good guys and avoid the cowboys</p>	
+				</div>
+			</div>
+        <!-- End Book Area -->  
+        
+            <!-- Book Area -->
+			<div class="bookbox">
+				<div class="gameinfo1">
+        <!-- Book Name -->
+                    <h3><a href="http://www.fidelitybooks.co.uk/book3.html">JUST JOKES, OK?</a></h3><br>
+        <!-- Book Description -->
+				<p>A collection of jokes, tested on the collector's family, to thaw all but the most grumpy of hard-hearts</p>	
+				</div>
+			</div>
+        <!-- End Book Area -->
+         
+            <!-- Book Area -->
+			<div class="bookbox">
+				<div class="gameinfo1">
+        <!-- Book Name -->
+                    <h3><a href="http://www.fidelitybooks.co.uk/book4.html">Twenty-One<br>
+                        SECRET RULES<br> for <br>
+                        SURVIVAL<br>
+                        in your<br>
+                        office, business &amp;workplace</a></h3><br>
+        <!-- Book Description -->
+					
+				</div>
+			</div>
+        <!-- End Book Area -->
+            <!-- Book Area -->
+			<div class="bookbox">
+				<div class="gameinfo1">
+        <!-- Book Name -->
+                    <h3><a href="http://www.fidelitybooks.co.uk/book5.html">Granite Kitchen Worktops</a></h3><br>
+        <!-- Book Description -->
+				<p>Trade knowledge for homeowners wanting a granite worktop</p>	
+				</div>
+			</div>
+        <!-- End Book Area -->
+      
+        </div>
+
+{% endblock %}
