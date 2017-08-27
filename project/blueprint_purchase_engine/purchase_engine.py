@@ -106,7 +106,7 @@ def free_book():
 			email = request.form['email']
 			book = request.form['book']
 			key = key_generator()
-			download_url = 'fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
+			download_url = 'https://fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
 			db_key = purchase_key(key)
 			db.session.add(db_key)
 			db.session.commit()
