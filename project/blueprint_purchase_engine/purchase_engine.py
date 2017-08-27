@@ -102,8 +102,8 @@ def success():
 def download(book, customer_key):
 	key_check = db.session.query(purchase_key).filter_by(key=customer_key).first()
 	if key_check:
-		db.session.delete(key_check)
-		db.session.commit()
+		# db.session.delete(key_check)
+		# db.session.commit()
 		return send_file('book_pdfs/{}.pdf'.format(book), as_attachment=True, attachment_filename='namethiswhatyouwant.pdf')
 	
 	else:
