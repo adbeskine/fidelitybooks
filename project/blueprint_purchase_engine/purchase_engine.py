@@ -53,7 +53,7 @@ def ipn():
 				email = request.form['payer_email']
 			key = key_generator()
 			book = request.form['custom']
-			download_url = 'https://nameless-sea-57538.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
+			download_url = 'https://fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
 			
 			# save the key to the database
 			db_key = purchase_key(key)
