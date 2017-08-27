@@ -103,16 +103,19 @@ def success():
 
 @purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
 def download(book, customer_key):
-	session.pop('key_check', None)
 	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
+
+	if not key:
+		session['key_check'] = False
 	if key:
 		session['key_check'] = True
-	if 'key_check' in session:
+
+	if session['key_check'] == True:
 		db.session.delete(key)
 		db.session.commit()
 		return send_file('book_pdfs/{}.pdf'.format(book), as_attachment=True, attachment_filename='namethiswhatyouwant.pdf')
 	
-	else:
+	elif session['key_check'] == False:
 		return 'The purchase key is either invalid or already used.'
 
 @purchase_engine.route('/free_book', methods=['GET', 'POST'])
