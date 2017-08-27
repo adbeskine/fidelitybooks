@@ -1,12 +1,12 @@
 import flask
-from flask import Blueprint, render_template, url_for, redirect, request, send_from_directory, send_file
+from flask import Blueprint, render_template, url_for, redirect, request, send_from_directory, send_file, session
 from project import db, app
 from project.models import purchase_key
 from werkzeug.datastructures import ImmutableOrderedMultiDict
 import requests, string, random, smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+import threading
 ######################
 ####HELPER METHODS####
 ######################
@@ -31,6 +31,7 @@ def send_email(fromaddr, fromaddr_password, toaddr, subject, text): #note, set u
 
 def download_page():
 	return render_template('download.html', book=book)
+
 
 #-------------------------------------#
 
@@ -98,12 +99,15 @@ def success():
 	return render_template('purchase_success.html')
 	# render basic template saying something along the lines of "purchase successful a download link has been sent to your email"
 
+
+
 @purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
 def download(book, customer_key):
 	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
-	key_check = key
-	if key_check:
-		db.session.delete(key_check)
+	if key:
+		session['key_check'] = True
+	if 'key_check' in session:
+		db.session.delete(key)
 		db.session.commit()
 		return send_file('book_pdfs/{}.pdf'.format(book), as_attachment=True, attachment_filename='namethiswhatyouwant.pdf')
 	
