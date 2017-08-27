@@ -100,7 +100,8 @@ def success():
 
 @purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
 def download(book, customer_key):
-	key_check = db.session.query(purchase_key).filter_by(key=customer_key).first()
+	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
+	key_check = key
 	if key_check:
 		# db.session.delete(key_check)
 		# db.session.commit()
