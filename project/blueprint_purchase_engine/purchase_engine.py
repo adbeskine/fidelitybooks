@@ -115,7 +115,6 @@ def download(book, customer_key):
 	if key:
 		delkey.start()
 		dowbok.start()
-		return 'done'
 			
 	else:
 		return 'The purchase key is either invalid or already used.'
