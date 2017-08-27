@@ -100,13 +100,13 @@ def success():
 	# render basic template saying something along the lines of "purchase successful a download link has been sent to your email"
 
 def delete_key(keyy):
-	key = db.session.query(purchase_key).filter_by(key=keyy)
+	key = db.session.query(purchase_key).filter_by(key=keyy).first()
 	db.session.delete(key)
 	db.session.commit()
 
 @purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
 def download(book, customer_key):
-	key = db.session.query(purchase_key).filter_by(key=customer_key)
+	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
 	if key:
 		delete_key(customer_key)
 		return send_file('book_pdfs/{}.pdf'.format(book), as_attachment=True, attachment_filename='namethiswhatyouwant.pdf')
