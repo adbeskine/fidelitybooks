@@ -29,8 +29,30 @@ def send_email(fromaddr, fromaddr_password, toaddr, subject, text): #note, set u
 	server.quit()
 	#source: http://naelshiab.com/tutorial-send-email-python/
 
-def download_page():
-	return render_template('download.html', book=book)
+def send_book_link(email, book):
+	key=key_generator()
+	download_url = 'https://fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
+	try:
+		db_key = purchase_key(key)
+		db.session.add(db_key)
+		db.session.commit()
+	except Exception as e:
+		return send_email(
+		fromaddr = 'fidelitydevv@gmail.com',
+		fromaddr_password = 'afgu6799',
+		toaddr = 'a.d.beskine@outlook.com',
+		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
+		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:\n{data}\n\n\n{e}'.format(data = str(values), e=e)
+		)		
+		# send the email
+	send_email(
+		fromaddr = 'fidelitydevv@gmail.com',
+		fromaddr_password = 'afgu6799',
+		toaddr = email,
+		subject = 'Thank you for your purchase from Fidelity Books!',
+		text = "Hello,\nThank you for your purchase, you can download your book here:\n{download_url}\nplease note this download link expires after one download.".format(download_url=download_url)
+		)
+
 
 
 #-------------------------------------#
@@ -39,7 +61,7 @@ purchase_engine = Blueprint('purchase_engine', 'project')
 
 @purchase_engine.route('/ipn/', methods=['POST'])
 def ipn():
-	arg = ''
+	arg = '' # this takes the ipn paypal sends and interprets it
 	request.parameter_storage_class = ImmutableOrderedMultiDict
 	values = request.form
 	for x,y in values.items():
@@ -47,48 +69,12 @@ def ipn():
 	validate_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate{arg}'.format(arg=arg)
 	r = requests.get(validate_url)
 	if r.text == 'VERIFIED':
-		try:
-			if request.form['option_selection1']:
-				email = request.form['option_selection1']
-			else:
-				email = request.form['payer_email']
-			key = key_generator()
-			book = request.form['custom']
-			download_url = 'https://fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
-			
-			# save the key to the database
-			try:
-				db_key = purchase_key(key)
-				db.session.add(db_key)
-				db.session.commit()
-			except Exception as e:
-				send_email(
-				fromaddr = 'fidelitydevv@gmail.com',
-				fromaddr_password = 'afgu6799',
-				toaddr = 'a.d.beskine@outlook.com',
-				subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
-				text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:\n{data}\n\n\n{e}'.format(data = str(values), e=e)
-				)
-
-			
-			# send the email
-			send_email(
-				fromaddr = 'fidelitydevv@gmail.com',
-				fromaddr_password = 'afgu6799',
-				toaddr = email,
-				subject = 'Thank you for your purchase from Fidelity Books!',
-				text = "Hello,\nThank you for your purchase, you can download your book here:\n{download_url}\nplease note this download link expires after one download.".format(download_url=download_url)
-				)
-			return r.text
-			#source: http://naelshiab.com/tutorial-send-email-python/
-		except Exception as e: #really this should be sent from fidelity to the developers LIVE email
-			send_email(
-				fromaddr = 'fidelitydevv@gmail.com',
-				fromaddr_password = 'afgu6799',
-				toaddr = 'a.d.beskine@outlook.com',
-				subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
-				text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:\n{data}\n\n\n{e}'.format(data = str(values), e=e)
-				)
+		if request.form['option_selection1']:
+			email = request.form['option_selection1']
+		else:
+			email = request.form['payer_email']
+		book = request.form['custom']
+		send_book_link(email, book)
 	return 'this is working'
 
 
@@ -100,24 +86,42 @@ def success():
 	# render basic template saying something along the lines of "purchase successful a download link has been sent to your email"
 
 
-@purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
+@purchase_engine.route('/download/<book>/<customer_key>', methods=['GET']) #add post here?
 def download(book, customer_key):
-	def delete_key(key):
-		db.session.delete(key)
+	book_key_data = {'book': book, 'key': customer_key}
+	requests.post('http://127.0.0.1:5000/api/v1', json=book_key_data) # url_for doesn't seem to work here for some reason...
+
+
+@purchase_engine.route('/api/v1', methods=['POST'])
+def api_handler():
+	if request.method == 'POST':
+		book_key_json = request.get_json(force=True) #force is necessary if for some reason (human error or otherwise) the MIME type isn't set
+		book = book_key_json["book"]
+		key = book_key_json["key"]
+		
+		key_query = db.session.query(purchase_key).filter_by(key=key).first()
+		if key_query:
+			key_data = {'key': key}
+			book_data = {'book': book}
+			requests.post('http://127.0.0.1:5000/delete_key', json=key_data)
+			requests.post('http://127.0.0.1:5000/asfju644-95hafld', json=book_data)
+
+
+@purchase_engine.route('/delete_key', methods=['POST'])
+def delete_key():
+	if request.method == 'POST':
+		key_data = request.get_json(force=true)
+		key = key_data["key"]
+		key_query = db.session.query(purchase_key).filter_by(key=key).first() # D.R.Y?
+		db.session.delete(key_query)
 		db.session.commit()
-	def download_book(book):
+
+@purchase_engine.route('/asfju644-95hafld', methods=['POST']) #anyone can just send a post request to this adress so must keep it unguessable
+def send_book():
+	if request.method=='POST':
+		book_data = request.get_json(force=True)
+		book = book_data["book"]
 		return send_file('book_pdfs/{}.pdf'.format(book), as_attachment=True, attachment_filename='namethiswhatyouwant.pdf')
-	
-	delkey = threading.Thread(name='delete_key', target=delete_key)
-	dowbok = threading.Thread(name='download_book', target=download_book)
-	
-	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
-	if key:
-		delkey.start()
-		return dowbok.start()
-			
-	else:
-		return 'The purchase key is either invalid or already used.'
 
 
 @purchase_engine.route('/free_book', methods=['GET', 'POST'])
@@ -126,26 +130,8 @@ def free_book():
 		if request.form['username'] == 'admin' and request.form['password'] == 'admin':
 			email = request.form['email']
 			book = request.form['book']
-			key = key_generator()
-			download_url = 'https://fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
-			db_key = purchase_key(key)
-			db.session.add(db_key)
-			db.session.commit()
-			send_email(
-				fromaddr = 'fidelitydevv@gmail.com',
-				fromaddr_password = 'afgu6799',
-				toaddr = email,
-				subject = 'Thank you for your purchase from Fidelity Books!',
-				text = "Hello,\nThank you for your purchase, you can download your book here:\n{download_url}\nplease note this download link expires after one download.".format(download_url=download_url)
-				)
+			send_book_link(email, book)
 	return render_template('free_book.html')
-
-
-################################
-####DRY AND CODE SMELL ALERT####
-################################
-
-# refract free_book and ipn so as to not repeat download url = etc etc
 
 
 # refract this code to make a 'download book' helper function which takes the parameters: book, email and does everything else to send the download email
