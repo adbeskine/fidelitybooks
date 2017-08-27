@@ -99,15 +99,27 @@ def success():
 	return render_template('purchase_success.html')
 	# render basic template saying something along the lines of "purchase successful a download link has been sent to your email"
 
+
 @purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
 def download(book, customer_key):
-	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
-	if key:
-		
+	def delete_key(key):
+		db.session.delete(key)
+		db.session.commit()
+	def download_book(book):
 		return send_file('book_pdfs/{}.pdf'.format(book), as_attachment=True, attachment_filename='namethiswhatyouwant.pdf')
 	
+	delkey = threading.Thread(name='delete_key', target=delete_key)
+	dowbok = threading.Thread(name='download_book', target=download_book)
+	
+	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
+	if key:
+		delkey.start()
+		dowbok.start()
+		return 'done'
+			
 	else:
 		return 'The purchase key is either invalid or already used.'
+
 
 @purchase_engine.route('/free_book', methods=['GET', 'POST'])
 def free_book():
