@@ -6,7 +6,7 @@ from werkzeug.datastructures import ImmutableOrderedMultiDict
 import requests, string, random, smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import threading
+import json
 ######################
 ####HELPER METHODS####
 ######################
@@ -83,45 +83,79 @@ def ipn():
 @purchase_engine.route('/success/')
 def success():
 	return render_template('purchase_success.html')
-	# render basic template saying something along the lines of "purchase successful a download link has been sent to your email"
 
 
-@purchase_engine.route('/download/<book>/<customer_key>', methods=['GET']) #add post here?
+
+@purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
 def download(book, customer_key):
-	book_key_data = {'book': book, 'key': customer_key}
-	requests.post('http://127.0.0.1:5000/api/v1', json=book_key_data) # url_for doesn't seem to work here for some reason...
-
-
-@purchase_engine.route('/api/v1', methods=['POST'])
-def api_handler():
-	if request.method == 'POST':
-		book_key_json = request.get_json(force=True) #force is necessary if for some reason (human error or otherwise) the MIME type isn't set
-		book = book_key_json["book"]
-		key = book_key_json["key"]
-		
-		key_query = db.session.query(purchase_key).filter_by(key=key).first()
-		if key_query:
-			key_data = {'key': key}
-			book_data = {'book': book}
-			requests.post('http://127.0.0.1:5000/delete_key', json=key_data)
-			requests.post('http://127.0.0.1:5000/asfju644-95hafld', json=book_data)
-
-
-@purchase_engine.route('/delete_key', methods=['POST'])
-def delete_key():
-	if request.method == 'POST':
-		key_data = request.get_json(force=true)
-		key = key_data["key"]
-		key_query = db.session.query(purchase_key).filter_by(key=key).first() # D.R.Y?
-		db.session.delete(key_query)
+	key = db.session.query(purchase_key).filter_by(key=customer_key).first()
+	if key:
+		db.session.delete(key)
 		db.session.commit()
-
-@purchase_engine.route('/asfju644-95hafld', methods=['POST']) #anyone can just send a post request to this adress so must keep it unguessable
-def send_book():
-	if request.method=='POST':
-		book_data = request.get_json(force=True)
-		book = book_data["book"]
 		return send_file('book_pdfs/{}.pdf'.format(book), as_attachment=True, attachment_filename='namethiswhatyouwant.pdf')
+	else:
+		return 'The purchase key is either invalid or already used.'
+
+
+
+
+
+# attempted heroku workaround: doesn't download from browser, simply displays encrypted/corrupt version (I'm not sure which)
+
+
+
+
+
+
+
+# @purchase_engine.route('/download/<book>/<customer_key>', methods=['GET', 'POST'])
+# def download(book, customer_key):
+	# url = 'http://127.0.0.1:5000/api/v1'
+	# data = {'book' : book, 'key' : customer_key} #add authentication key and verification here
+	# headers = {'Content-Type' : 'application/json'}
+	# r = requests.post(url, data=json.dumps(data), headers=headers) # 1. sends customer download request to api
+	# # delete_key sends json back here #auth code verified here
+	# if request.method == 'POST':
+		# json_data = request.get_json()
+		# if json_data['auth'] == 's0?3di+y[+L!Yxdk=XdDMR/!;hT?&': # 6. checks for internal authentication key
+			# book = json_data['book']
+			# return send_file('book_pdfs/{}.pdf'.format(data['book']), as_attachment=True, attachment_filename='namethiswhatyouwant.pdf') # 7. downloads book
+	# return r.text
+# 
+# 
+# @purchase_engine.route('/api/v1', methods=['GET', 'POST'])
+# def api_handler():
+	# if request.method == 'POST':
+		# book_key_json = request.get_json() #force is necessary if for some reason (human error or otherwise) the MIME type isn't set
+		# key = book_key_json["key"]
+		# book = book_key_json["book"]		
+		# key_query = db.session.query(purchase_key).filter_by(key=key).first() # 2. api takes information from download request and checks key against db
+# 	
+		# if key_query:
+			# url = 'http://127.0.0.1:5000/delete_key'
+			# data = {'book' : book, 'key' : key, 'request_source_auth' : 's0?3di+y[+L!Yxdk=XdDMR/!;hT?&'} # 3. if customerkey passes, an internal authentication key is added to the data (so in final download the only post requests that can trigger a download MUST have coem from here, not a hacker)
+			# headers = {'Content-Type' : 'application/json'}
+			# r = requests.post(url, data=json.dumps(data), headers=headers)
+			# return r.text
+# 
+		# else: # if an invalid or used key is used THIS is where it 'should' abort the operation.
+			# return 'key is invalid or expired.'
+# 
+# @purchase_engine.route('/delete_key', methods=['POST'])
+# def delete_key():
+	# if request.method == 'POST':
+		# book_key_json = request.get_json()
+		# key = book_key_json["key"]
+		# book = book_key_json["book"]
+		# auth_code = book_key_json["request_source_auth"]
+		# key_query = db.session.query(purchase_key).filter_by(key=key).first() # D.R.Y?
+		# db.session.delete(key_query)                                                    # 4. the key is deleted from the database
+		# db.session.commit()
+		# url = 'http://127.0.0.1:5000/download/{}/{}'.format(book, key)
+		# data = {'book' : book, 'auth':auth_code} ###!!!!!!! CODE SMELL !!!!!! ####
+		# headers = {'Content-Type' : 'application/json'}
+		# r = requests.post(url, data=json.dumps(data), headers=headers)  # 5. json is posted back to the inital page the customer clicked trigerring the download, note the auth code
+		# return r.text
 
 
 @purchase_engine.route('/free_book', methods=['GET', 'POST'])
