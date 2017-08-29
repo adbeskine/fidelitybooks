@@ -45,7 +45,7 @@ def send_book_link(email, book):
 		fromaddr_password = 'epala97ehebe',
 		toaddr = 'a.d.beskine@outlook.com',
 		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
-		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:\n{data}\n\n\n{e}'.format(data = str(values), e=e)
+		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:{e}'.format(e=e)
 		)		
 		# send the email
 	send_email(
@@ -67,17 +67,26 @@ def ipn():
 	arg = '' # this takes the ipn paypal sends and interprets it
 	request.parameter_storage_class = ImmutableOrderedMultiDict
 	values = request.form
-	for x,y in values.items():
-		arg += "&{x}={y}".format(x=x, y=y)
-	validate_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate{arg}'.format(arg=arg)
-	r = requests.get(validate_url)
-	if r.text == 'VERIFIED':
-		if request.form['option_selection1']:
-			email = request.form['option_selection1']
-		else:
-			email = request.form['payer_email']
-		book = request.form['custom']
-		send_book_link(email, book)
+	try:
+		for x,y in values.items():
+			arg += "&{x}={y}".format(x=x, y=y)
+		validate_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_notify-validate{arg}'.format(arg=arg)
+		r = requests.get(validate_url)
+		if r.text == 'VERIFIED':
+			if request.form['option_selection1']:
+				email = request.form['option_selection1']
+			else:
+				email = request.form['payer_email']
+			book = request.form['custom']
+			send_book_link(email, book)
+	except Exception as e:
+		return send_email(
+		fromaddr = 'noreply@fidelitybooks.co.uk',
+		fromaddr_password = 'epala97ehebe',
+		toaddr = 'a.d.beskine@outlook.com',
+		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
+		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n{values}\n\nDATA:{e}'.format(values=values, e=e)
+		)	
 	return 'this is working'
 
 
