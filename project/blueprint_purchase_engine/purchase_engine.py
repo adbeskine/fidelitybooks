@@ -34,7 +34,7 @@ def send_email(fromaddr, fromaddr_password, toaddr, subject, text): #note, set u
 
 def send_book_link(email, book):
 	key=key_generator()
-	download_url = 'https://fidelitybooks.co.uk/download/{book}/{key}'.format(book=book, key=key)
+	download_url = 'https://fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
 	try:
 		db_key = purchase_key(key)
 		db.session.add(db_key)
