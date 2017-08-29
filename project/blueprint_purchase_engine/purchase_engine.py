@@ -24,7 +24,7 @@ def send_email(fromaddr, fromaddr_password, toaddr, subject, text): #note, set u
 	body = text
 
 	msg.attach(MIMEText(body, 'plain'))
-	server=smtplib.SMTP('smtp.gmail.com', 587)
+	server=smtplib.SMTP('smtp-relay.gmail.com', 587)
 	server.starttls()
 	server.login(fromaddr, fromaddr_password)
 	text = msg.as_string()
