@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, url_for
 
 base = Blueprint('base', 'project', static_folder='static')
 
-@base.route('/')
+@base.route('/', methods=['GET', 'POST'])
 def index():
 	return render_template('index.html')
 
