@@ -41,16 +41,16 @@ def send_book_link(email, book):
 		db.session.commit()
 	except Exception as e:
 		return send_email(
-		fromaddr = 'fidelitydevv@gmail.com',
-		fromaddr_password = 'afgu6799',
+		fromaddr = 'noreply@fidelitybooks.co.uk',
+		fromaddr_password = 'epala97ehebe',
 		toaddr = 'a.d.beskine@outlook.com',
 		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
 		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:{e}'.format(e=e)
 		)		
 		# send the email
 	send_email(
-		fromaddr = 'fidelitydevv@gmail.com',
-		fromaddr_password = 'afgu6799',
+		fromaddr = 'noreply@fidelitybooks.co.uk',
+		fromaddr_password = 'epala97ehebe',
 		toaddr = email,
 		subject = 'Thank you for your purchase from Fidelity Books!',
 		text = "Hello,\nThank you for your purchase, you can download your book here:\n{download_url}\nplease note this download link expires after one download.".format(download_url=download_url)
