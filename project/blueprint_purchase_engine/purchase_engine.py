@@ -42,7 +42,7 @@ def send_book_link(email, book):
 	except Exception as e:
 		return send_email(
 		fromaddr = 'noreply@fidelitybooks.co.uk',
-		fromaddr_password = 'lbrhkreaaaiclwlk',
+		fromaddr_password = 'afgu6799',
 		toaddr = 'a.d.beskine@outlook.com',
 		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
 		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:{e}'.format(e=e)
@@ -50,7 +50,7 @@ def send_book_link(email, book):
 		# send the email
 	send_email(
 		fromaddr = 'noreply@fideliytbooks.co.uk',
-		fromaddr_password = 'lbrhkreaaaiclwlk',
+		fromaddr_password = 'afgu6799',
 		toaddr = email,
 		subject = 'Thank you for your purchase from Fidelity Books!',
 		text = "Hello,\nThank you for your purchase, you can download your book here:\n{download_url}\nplease note this download link expires after one download.".format(download_url=download_url)
@@ -82,7 +82,7 @@ def ipn():
 	except Exception as e:
 		return send_email(
 		fromaddr = 'noreply@fidelitybooks.co.uk',
-		fromaddr_password = 'lbrhkreaaaiclwlk',
+		fromaddr_password = 'afgu6799',
 		toaddr = 'a.d.beskine@outlook.com',
 		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
 		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n{values}\n\nDATA:{e}'.format(values=values, e=e)
