@@ -34,23 +34,23 @@ def send_email(fromaddr, fromaddr_password, toaddr, subject, text): #note, set u
 
 def send_book_link(email, book):
 	key=key_generator()
-	download_url = 'https://fidelitybooks.herokuapp.com/download/{book}/{key}'.format(book=book, key=key)
+	download_url = 'https://fidelitybooks.co.uk/download/{book}/{key}'.format(book=book, key=key)
 	try:
 		db_key = purchase_key(key)
 		db.session.add(db_key)
 		db.session.commit()
 	except Exception as e:
 		return send_email(
-		fromaddr = 'fidelitydevv@gmail.com',
-		fromaddr_password = 'afgu6799',
+		fromaddr = 'noreply@fidelitybooks.co.uk',
+		fromaddr_password = 'epala97ehebe',
 		toaddr = 'a.d.beskine@outlook.com',
 		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
 		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:\n{data}\n\n\n{e}'.format(data = str(values), e=e)
 		)		
 		# send the email
 	send_email(
-		fromaddr = 'fidelitydevv@gmail.com',
-		fromaddr_password = 'afgu6799',
+		fromaddr = 'noreply@fideliytbooks.co.uk',
+		fromaddr_password = 'epala97ehebe',
 		toaddr = email,
 		subject = 'Thank you for your purchase from Fidelity Books!',
 		text = "Hello,\nThank you for your purchase, you can download your book here:\n{download_url}\nplease note this download link expires after one download.".format(download_url=download_url)
