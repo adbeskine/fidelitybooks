@@ -7,7 +7,6 @@ import requests, string, random, smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import json, sys, os
-from PyPDF2 import PdfFileReader, PdfFileWriter
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__)+'../..'))
 ######################
@@ -41,16 +40,16 @@ def send_book_link(email, book):
 		db.session.commit()
 	except Exception as e:
 		return send_email(
-		fromaddr = 'fidelitydevv@gmail.com',
-		fromaddr_password = 'afgu6799',
-		toaddr = 'a.d.beskine@outlook.com',
+		fromaddr = '#######',
+		fromaddr_password = '########',
+		toaddr = '########',
 		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
 		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n DATA:{e}'.format(e=e)
 		)		
 		# send the email
 	send_email(
-		fromaddr = 'fidelitydevv@gmail.com',
-		fromaddr_password = 'afgu6799',
+		fromaddr = '#######',
+		fromaddr_password = '########',
 		toaddr = email,
 		subject = 'Thank you for your purchase from Fidelity Books!',
 		text = "Hello,\nThank you for your purchase, you can download your book here:\n{download_url}\nplease note this download link expires after one download.".format(download_url=download_url)
@@ -81,9 +80,9 @@ def ipn():
 			send_book_link(email, book)
 	except Exception as e:
 		return send_email(
-		fromaddr = 'fidelitydevv@gmail.com',
-		fromaddr_password = 'afgu6799',
-		toaddr = 'a.d.beskine@outlook.com',
+		fromaddr = '#######',
+		fromaddr_password = '#####',
+		toaddr = '########',
 		subject = 'FIDELITYBOOKS PURCHASE ENGINE ERROR',
 		text = 'if you are receiving this a live customer has experienced a purchase error:\n\n{values}\n\nDATA:{e}'.format(values=values, e=e)
 		)	
@@ -95,8 +94,6 @@ def ipn():
 def success():
 	return render_template('purchase_success.html')
 
-
-# works perfecly offline, online it deletes the key then says purchase key is invalid (I have commented out code to deduce this is the case.)
 
 @purchase_engine.route('/download/<book>/<customer_key>', methods=['GET'])
 def download(book, customer_key):
@@ -111,11 +108,8 @@ def download(book, customer_key):
 @purchase_engine.route('/free_book', methods=['GET', 'POST'])
 def free_book():
 	if request.method == 'POST':
-		if request.form['username'] == 'admin' and request.form['password'] == 'admin':
+		if request.form['username'] == '######' and request.form['password'] == '#######':
 			email = request.form['email']
 			book = request.form['book']
 			send_book_link(email, book)
 	return render_template('free_book.html')
-
-
-# refract this code to make a 'download book' helper function which takes the parameters: book, email and does everything else to send the download email
